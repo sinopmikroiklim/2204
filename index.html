@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Gezici Mikro İklim İstasyonu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <style>
     :root {
       --bg: #f5f7fb;
@@ -72,7 +71,9 @@
       font-size: 0.9rem;
       color: var(--muted);
     }
-    nav a:hover { color: var(--primary); }
+    nav a:hover {
+      color: var(--primary);
+    }
     .nav-btn {
       padding: 0.4rem 0.9rem;
       border-radius: 999px;
@@ -89,12 +90,17 @@
       margin: 0 auto;
       padding: 1.5rem;
     }
-    section { margin: 2.5rem 0; }
+    section {
+      margin: 2.5rem 0;
+    }
     h1, h2, h3 {
       font-weight: 700;
       letter-spacing: 0.03em;
     }
-    h2 { font-size: 1.4rem; margin-bottom: 1rem; }
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
     .muted { color: var(--muted); font-size: 0.95rem; }
 
     /* HERO */
@@ -135,6 +141,15 @@
       box-shadow: var(--shadow-soft);
     }
     .btn-primary:hover { background: var(--primary-dark); }
+    .btn-ghost {
+      padding: 0.55rem 1.2rem;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.8);
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.8);
+    }
+    .btn-ghost span { font-size: 1rem; margin-right: 0.2rem; }
 
     .hero-card {
       background: rgba(255, 255, 255, 0.9);
@@ -144,10 +159,19 @@
       display: grid;
       gap: 0.8rem;
     }
-    .pill { padding: 0.25rem 0.6rem; border-radius: 999px; background: rgba(148,163,184,0.12); font-size: .75rem;}
-    .pill-heat { background: rgba(248,113,113,0.16); }
-    .pill-clean { background: rgba(52,211,153,0.16); }
-
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+    }
+    .pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.12);
+    }
+    .pill-heat { background: rgba(248, 113, 113, 0.16); }
+    .pill-clean { background: rgba(52, 211, 153, 0.14); }
     .mini-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -159,8 +183,10 @@
       padding: 0.5rem 0.6rem;
       background: #f8fafc;
     }
+    .mini-label { color: var(--muted); font-size: 0.75rem; }
+    .mini-value { font-weight: 600; }
 
-    /* Cards */
+    /* CARDS */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -172,6 +198,7 @@
       padding: 1rem 1.1rem;
       box-shadow: 0 10px 24px rgba(15,23,42,0.06);
     }
+    .card h3 { font-size: 1.02rem; margin-bottom: 0.2rem; }
     .badge {
       display: inline-block;
       padding: 0.15rem 0.55rem;
@@ -182,16 +209,40 @@
       margin-bottom: 0.4rem;
     }
 
-    /* Grafik */
-    .grafik {
+    /* TWO COLUMN */
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+    }
+    .list {
+      padding-left: 1.1rem;
+      font-size: 0.95rem;
+    }
+    .list li { margin-bottom: 0.3rem; }
+
+    /* TABLE */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 0.7rem;
+    }
+    table {
       width: 100%;
-      max-width: 1100px;
-      display: block;
-      margin: 1.2rem auto;
-      border-radius: 14px;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 0.45rem 0.5rem;
+      text-align: left;
+    }
+    th {
+      background: #eef2ff;
+      font-weight: 600;
     }
 
+    /* FOOTER */
     footer {
       margin-top: 2.5rem;
       padding: 1.2rem 0;
@@ -202,94 +253,325 @@
 
     @media (max-width: 820px) {
       .hero { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
       nav ul { display: none; }
     }
+    /* --- GRAFİK BLOKLARI --- */
+.graphic-block {
+  width: 100%;
+  margin: 2.5rem 0;
+  text-align: center;
+}
+
+.graphic-block img {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  margin-bottom: 0.8rem;
+}
+
+.graphic-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #1f2933;
+}
+
   </style>
 </head>
-
 <body>
-
-<header>
-  <div class="nav">
-    <div class="logo">
-      <div class="logo-badge">µ</div>
-      <span>Mikro İklim İstasyonu</span>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#proje">Proje</a></li>
-        <li><a href="#yontem">Yöntem</a></li>
-        <li><a href="#bulgular">Bulgular</a></li>
-        <li><a href="#sonuc">Sonuç & Öneriler</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-<!-- HERO -->
-<section id="proje" class="hero">
-  <div class="hero-text">
-    <div class="tagline">🌡🌫 Gezici Mikro İklim İzleme</div>
-    <h1>Sinop İçin Gezici Mikro İklim İstasyonu ile Kentsel Isı Adası ve Hava Kalitesi Analizi</h1>
-    <p class="muted">
-      Beş farklı bölge, dört zaman dilimi ve çoklu sensörlerle; sıcaklık, nem, ışık, basınç, PM₂.₅ ve PM₁₀ değerlerini karşılaştıran kapsamlı mikroiklim çalışması.
-    </p>
-  </div>
-
-  <aside class="hero-card">
-    <div class="pill pill-heat">Kentsel Isı Adası</div>
-    <div class="pill pill-clean">PM₂.₅ / PM₁₀ Takibi</div>
-    <div class="pill">Gezici İstasyon</div>
-
-    <div class="mini-grid">
-      <div class="mini-card">
-        <div class="mini-label">Bölgeler</div>
-        <div class="mini-value">Nötr, A, B, C, D</div>
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-badge">µ</div>
+        <span>Mikro İklim İstasyonu</span>
       </div>
-      <div class="mini-card">
-        <div class="mini-label">Zaman Dilimleri</div>
-        <div class="mini-value">08:00 – 12:00 – 15:30 – 20:00</div>
-      </div>
+      <nav>
+        <ul>
+          <li><a href="#proje">Proje</a></li>
+          <li><a href="#yontem">Yöntem</a></li>
+          <li><a href="#bulgular">Bulgular</a></li>
+          <li><a href="#sonuc">Sonuç &amp; Öneriler</a></li>
+          <li><a href="#ekip">Ekip</a></li>
+        </ul>
+      </nav>
+      <a href="#rapor" class="nav-btn">Raporu Görüntüle</a>
     </div>
-  </aside>
-</section>
+  </header>
 
-<!-- YÖNTEM -->
-<section id="yontem">
-  <h2>Proje Yöntemi</h2>
-  <p>
-    ESP32 tabanlı gezici istasyon 20 gün boyunca 5 bölgede ölçüm yapmış, veriler Excel’de temizlenip ortalamalar üzerinden analiz edilmiştir.
-  </p>
-</section>
+  <main>
+    <!-- HERO -->
+    <section id="proje" class="hero">
+      <div class="hero-text">
+        <div class="tagline">
+          🌡🌫 Gezici Mikro İklim İzleme
+        </div>
+        <h1>Sinop İçin Gezici Mikro İklim İstasyonu ile Kentsel Isı Adası ve Hava Kalitesi Analizi</h1>
+        <p class="muted">
+          Beş farklı bölge, dört zaman dilimi ve çoklu sensörlerle; 
+          sıcaklık, nem, ışık, basınç, PM₂.₅ ve PM₁₀ değerlerini gezici bir istasyonla
+          karşılaştıran lise öğrencilerinin yürüttüğü bilimsel çalışma.
+        </p>
+        <div class="hero-buttons">
+          <a href="#rapor" class="btn-primary">📄 Proje Raporu Özeti</a>
+          <a href="#bulgular" class="btn-ghost"><span>➜</span> Grafiklere Göz At</a>
+        </div>
+      </div>
 
-<!-- BULGULAR -->
-<section id="bulgular">
-  <h2>Özet Bulgular</h2>
+      <aside class="hero-card">
+        <div class="hero-pill-row">
+          <span class="pill pill-heat">Kentsel Isı Adası</span>
+          <span class="pill pill-clean">PM₂.₅ / PM₁₀ Takibi</span>
+          <span class="pill">Gezici İstasyon</span>
+          <span class="pill">Lise Öğrencileriyle STEM</span>
+        </div>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <div class="mini-label">Bölgeler</div>
+            <div class="mini-value">Nötr, A, B, C, D</div>
+            <div class="muted" style="font-size:0.7rem;">
+              Açık alan, okul yerleşkesi, şehir merkezi, sahil, ormanlık alan
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Zaman Dilimleri</div>
+            <div class="mini-value">08:00 – 12:00 – 15:30 – 20:00</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Temel Bulgular</div>
+            <div class="muted" style="font-size:0.75rem;">
+              B: en sıcak &amp; en kirli, D: en serin &amp; en temiz, C: en aydınlık
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">Eğitsel Katkı</div>
+            <div class="muted" style="font-size:0.75rem;">
+              Sensör okuma, veri analizi ve iklim okuryazarlığı becerileri
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
 
-  <img src="pm10.png" class="grafik">
-  <img src="pm25.png" class="grafik">
-  <img src="basinc.png" class="grafik">
-  <img src="lux.png" class="grafik">
-  <img src="nem.png" class="grafik">
-  <img src="sicaklik.png" class="grafik">
+    <!-- YÖNTEM -->
+    <section id="yontem">
+      <h2>Proje Yöntemi</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            Çalışmada, öğrenciler tarafından geliştirilen ESP32 tabanlı gezici mikro iklim istasyonu
+            kullanılmış; istasyon bir araç üzerinde beş bölgeyi dolaşacak şekilde sahaya çıkarılmıştır:
+            Nötr açık alan, okul yerleşkesi (A), şehir merkezi (B), sahil (C) ve ormanlık alan (D).
+          </p>
+          <p class="muted">
+            Her bölgede 20 gün boyunca, 08:00, 12:00, 15:30 ve 20:00 zaman dilimlerinde ölçüm alınmış;
+            ham veriler Excel ortamında temizlenerek 20 günlük ortalamalar üzerinden analiz edilmiştir
+            (detaylı grafikler ve tablo özetleri EK’lerde sunulmuştur).
+          </p>
+        </div>
+        <div class="card">
+          <h3>Kullanılan Sensörler</h3>
+          <ul class="list">
+            <li>Sıcaklık &amp; Nem &amp; Basınç sensörü</li>
+            <li>Lux (ışık şiddeti) sensörü</li>
+            <li>PM₂.₅ ve PM₁₀ sensörü</li>
+            <li>Veri kaydı &amp; ESP-NOW ile kablosuz aktarım</li>
+          </ul>
+          <p class="muted" style="margin-top:0.4rem;font-size:0.8rem;">
+            Sensör kalibrasyon adımları, hata kaynakları ve veri temizleme süreci
+            ayrıntılı olarak teknik EK’lerde açıklanmıştır.
+          </p>
+        </div>
+      </div>
+    </section>
 
-</section>
+    <!-- BULGULAR ÖZET -->
+    <section id="bulgular">
+      <h2>Temel Bulgular – Mikro İklim Karşılaştırması</h2>
+      <p class="muted" style="margin-bottom:0.9rem;">
+        Ayrıntılı zaman dilimi analizleri (08:00–12:00–15:30–20:00) sıcaklık, nem, ışık,
+        basınç ve partikül maddeler (PM₂.₅, PM₁₀) için ayrı ayrı yapılmış ve EK’lerde
+        grafiklerle desteklenmiştir. Aşağıdaki tablo, beş bölge için genel karakteri özetlemektedir.
+      </p>
 
-<!-- SONUÇ -->
-<section id="sonuc">
-  <h2>Sonuç & Öneriler</h2>
-  <p>
-    Şehir merkezi en sıcak ve en kirli bölgeyi oluştururken ormanlık alan en serin ve en temiz mikroiklimdir.
-    Bitki örtüsünün kirletici filtreleme etkisi ve yapılaşmanın ısı adası oluşturması literatürle uyumludur.
-  </p>
-</section>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Bölge</th>
+              <th>Sıcaklık</th>
+              <th>Nem</th>
+              <th>Lux</th>
+              <th>PM₂.₅ – PM₁₀</th>
+              <th>Genel Karakter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nötr – Açık Alan</td>
+              <td>Akşam en yüksek</td>
+              <td>En düşük</td>
+              <td>Orta–yüksek</td>
+              <td>Düşük</td>
+              <td>Gölgesiz, ısıyı tutan ama görece temiz referans alan</td>
+            </tr>
+            <tr>
+              <td>A – Okul Yerleşkesi</td>
+              <td>Orta</td>
+              <td>Orta–düşük</td>
+              <td>Orta</td>
+              <td>Orta–yüksek</td>
+              <td>Yapı gölgeleri ve yerleşim etkisi olan yarı kentsel alan</td>
+            </tr>
+            <tr>
+              <td>B – Şehir Merkezi</td>
+              <td>En yüksek</td>
+              <td>Orta–düşük</td>
+              <td>Çok yüksek</td>
+              <td>En yüksek</td>
+              <td>Belirgin kentsel ısı adası ve en kirli mikroiklim</td>
+            </tr>
+            <tr>
+              <td>C – Sahil</td>
+              <td>Yüksek</td>
+              <td>Yüksek</td>
+              <td>En yüksek</td>
+              <td>Orta</td>
+              <td>Deniz etkisi güçlü, ışık ve rüzgârın şekillendirdiği dinamik alan</td>
+            </tr>
+            <tr>
+              <td>D – Ormanlık Alan</td>
+              <td>En düşük</td>
+              <td>En yüksek</td>
+              <td>En düşük</td>
+              <td>En düşük</td>
+              <td>Doğal, serin ve temiz; kirletici filtreleyen bitki örtüsü</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+<!-- GRAFİKLER -->
+<div class="graphic-block">
+  <div class="graphic-title">Sıcaklık Ölçüm Grafiği</div>
+  <img src="sicaklik.png" alt="Sıcaklık Ölçüm Grafiği">
+</div>
 
-<footer>
-  Gezici Mikro İklim İstasyonu — Sinop · TÜBİTAK 2204 Projesi
-</footer>
+<div class="graphic-block">
+  <div class="graphic-title">Nem Ölçüm Grafiği</div>
+  <img src="nem.png" alt="Nem Ölçüm Grafiği">
+</div>
 
-</main>
+<div class="graphic-block">
+  <div class="graphic-title">Işık (Lux) Ölçüm Grafiği</div>
+  <img src="lux.png" alt="Lux Ölçüm Grafiği">
+</div>
+
+<div class="graphic-block">
+  <div class="graphic-title">Basınç Ölçüm Grafiği</div>
+  <img src="basinc.png" alt="Basınç Ölçüm Grafiği">
+</div>
+
+<div class="graphic-block">
+  <div class="graphic-title">PM2.5 Ölçüm Grafiği</div>
+  <img src="pm25.png" alt="PM2.5 Ölçüm Grafiği">
+</div>
+
+<div class="graphic-block">
+  <div class="graphic-title">PM10 Ölçüm Grafiği</div>
+  <img src="pm10.png" alt="PM10 Ölçüm Grafiği">
+</div>
+
+      <div class="cards" style="margin-top:1.4rem;">
+        <div class="card">
+          <span class="badge">Sıcaklık &amp; Nem</span>
+          <h3>Kentsel Isı Adası Deseni</h3>
+          <p class="muted">
+            Öğle saatlerinde şehir merkezi (B) belirgin biçimde en sıcak bölgedir;
+            ormanlık alan (D) ise gün boyunca en düşük sıcaklıklara ve en yüksek neme sahiptir.
+            Bu desen, KİA çalışmalarında tanımlanan klasik kent–doğa karşıtlığını
+            küçük ölçekte doğrulamaktadır.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">Lux</span>
+          <h3>Güneşlenme ve Gölgeleme</h3>
+          <p class="muted">
+            Sahil (C) 08:00 ve 12:00 ölçümlerinde en yüksek lux değerlerine ulaşırken,
+            ormanlık alan (D) bitki örtüsü nedeniyle en düşük değerleri vermiştir.
+            Nötr alan, gölgesiz yapısıyla öğleden sonra ışıktan etkilenmeye açıktır;
+            bu durum sıcaklıkların akşam saatlerinde daha yavaş düşmesine katkı sağlamaktadır.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">PM₂.₅ / PM₁₀</span>
+          <h3>Hava Kalitesi ve Trafik Etkisi</h3>
+          <p class="muted">
+            PM₂.₅ ve PM₁₀ değerleri en yüksek düzeylere şehir merkezinde (B),
+            orta–yüksek düzeylere okul alanı (A) ve sahilde (C), en düşük düzeylere ise
+            ormanlık alanda (D) ulaşmıştır. Bu bulgular, trafiğin ve kentsel yüzeylerin
+            partikül yoğunluğunu artırdığına, bitki örtüsünün ise kirleticileri filtrelediğine
+            ilişkin literatürle uyumludur.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SONUÇ & ÖNERİLER -->
+    <section id="sonuc">
+      <h2>Sonuçlar ve Öneriler</h2>
+      <div class="two-col">
+        <div>
+          <p>
+            Çalışmanın sonuçları, kentsel dokunun (özellikle şehir merkezi B bölgesi)
+            hem sıcaklık hem de partikül madde bakımından en riskli mikroiklim
+            alanını oluşturduğunu; ormanlık alanın (D) ise serin ve temiz bir
+            referans alan olarak öne çıktığını göstermektedir. Sahil (C), güçlü
+            güneşlenme ve rüzgâr etkisi nedeniyle dinamik bir yapı sergilerken,
+            okul yerleşkesi (A) ve Nötr açık alan, kentsel ve doğal koşullar arasında
+            geçiş zonu niteliği taşımaktadır.
+          </p>
+          <p class="muted">
+            Ayrıntılı veri analizi, literatürde Tozam (2016) ve Yüksel (2005) gibi
+            çalışmalarda vurgulanan; bitki örtüsünün kirleticileri azaltıcı etkisi,
+            yoğun yapılaşmanın ısı adası ve partikül birikimine yol açması ve
+            gölgeleme–güneşlenme dengesinin mikroiklimi belirlemesi gibi sonuçlarla
+            örtüşmektedir.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Proje Temelli Öneriler</h3>
+          <ul class="list">
+            <li>Şehir merkezinde gölgelik ve ağaçlandırma koridorlarının artırılması</li>
+            <li>Okul ve kamu binalarında yeşil/serin çatı uygulamalarının teşvik edilmesi</li>
+            <li>Sahil hattında hem hava akımını kesmeyen hem de gölgeleme sağlayan tasarımlar</li>
+            <li>Ormanlık alanların hava kalitesi açısından “doğal filtre” rolünün korunması</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EĞİTSEL KATKI -->
+    <section id="rapor">
+      <h2>Eğitimsel Katkı ve Proje Çıktıları</h2>
+      <p>
+        Bu çalışma yalnızca mikro iklim verilerini ortaya koymakla kalmamış, aynı zamanda
+        lise öğrencilerinin sensör teknolojileri, veri toplama–analiz süreçleri ve küresel
+        iklim krizi bağlamında <strong>iklim okuryazarlığı</strong> kazanmalarına katkı sağlamıştır.
+        Öğrenciler ESP32 tabanlı bir istasyonu kendileri kurup sahaya taşıyarak, kentsel ısı
+        adası, hava kirliliği ve yeşil alanların önemi gibi kavramları soyut birer tanımdan
+        çıkarıp somut verilerle deneyimleme fırsatı bulmuşlardır.
+      </p>
+      <p class="muted">
+        Ayrıntılı zaman dilimi analizleri, grafikler ve çevresel hava kalitesi
+        değerlendirme raporu (Dr. Öğr. Üyesi Zehra Betül Öcal’ın katkılarıyla)
+        proje raporunun EK bölümünde sunulmuştur.
+      </p>
+    </section>
+    <footer>
+      Gezici Mikro İklim İstasyonu &mdash; Sinop · TÜBİTAK 2204 Projesi için taslak web sayfası
+    </footer>
+  </main>
 </body>
 </html>
