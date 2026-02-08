@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sonuç & Öneriler | Gezici Mikro İklim İstasyonu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --primary: #2d6cdf;
+      --primary-dark: #214fa0;
+      --accent: #ffb74d;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 14px 35px rgba(15, 23, 42, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #e4f0ff 0%, var(--bg) 48%, #edf2ff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(245, 247, 251, 0.85);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.7rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .logo-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2d6cdf, #3b82f6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8rem;
+      box-shadow: var(--shadow-soft);
+    }
+    nav ul {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    nav a:hover { color: var(--primary); }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    section { margin: 2.5rem 0; }
+    h1, h2, h3 { font-weight: 700; letter-spacing: 0.03em; }
+    h1 { font-size: clamp(1.7rem, 3vw, 2.2rem); margin-bottom: 0.6rem; }
+    h2 { font-size: 1.35rem; margin: 1.4rem 0 0.7rem; }
+    h3 { font-size: 1.05rem; margin: 0.9rem 0 0.35rem; }
+    .muted { color: var(--muted); font-size: 0.95rem; }
+
+    .page-hero {
+      background: rgba(255,255,255,0.9);
+      border-radius: var(--radius-xl);
+      padding: 1.2rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+    }
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.15rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.06);
+      color: var(--primary-dark);
+      font-size: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .justify-box { text-align: justify; line-height: 1.7; margin: 14px 0; }
+    .justify-box p { margin-bottom: 12px; text-indent: 30px; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+      border: 1px solid rgba(148,163,184,0.18);
+    }
+    .card p { color: var(--muted); font-size: 0.92rem; }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: rgba(37,99,235,0.06);
+      color: var(--primary-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .callout {
+      border-left: 4px solid rgba(45,108,223,0.45);
+      background: rgba(255,255,255,0.75);
+      padding: 0.9rem 1rem;
+      border-radius: 14px;
+      margin: 1rem 0;
+    }
+    .callout strong { color: var(--primary-dark); }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.9rem;
+    }
+    .chiplink {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.06);
+      border: 1px solid rgba(37,99,235,0.12);
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+    }
+    .chiplink:hover { background: rgba(37,99,235,0.10); }
+
+    /* Numara listesi (öneriler) */
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+      margin: 0.8rem 0 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .steps li {
+      counter-increment: step;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(148,163,184,0.22);
+      border-radius: var(--radius-lg);
+      padding: 0.9rem 1rem;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+    }
+    .steps li::before{
+      content: counter(step);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      margin-right: 0.6rem;
+      background: rgba(37,99,235,0.10);
+      color: var(--primary-dark);
+      font-weight: 700;
+      vertical-align: middle;
+    }
+    .steps strong { color: var(--text); }
+    .steps p { margin-top: 0.35rem; color: var(--muted); font-size: 0.95rem; }
+
+    footer {
+      margin-top: 2.5rem;
+      padding: 1.2rem 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      nav ul { display: none; }
+      .justify-box p { text-indent: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <div class="logo-badge">µ</div>
+        <span>Mikro İklim İstasyonu</span>
+      </div>
+      <nav>
+       <ul>
+          <li><a href="index.html">Proje</a></li>
+          <li><a href="sensorler.html">Teknik &amp; Tasarım</a></li>
+          <li><a href="noktalar.html">Ölçüm &amp; Noktaları</a></li>
+          <li><a href="yontem.html">Ölçüm &amp; Metodolojisi</a></li>
+          <li><a href="bulgular.html">Bulgular</a></li>
+          <li><a href="veri.html">Ölçüm  &amp; Verileri</a></li>
+          <li><a href="genel.html">Genel &amp; Analiz</a></li>
+	  <li><a href="sonuc.html">Sonuç &amp; Öneriler</a></li>
+          <li><a href="kaynak.html">Kaynakça</a></li>
+          
+        </ul>
+
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- SAYFA BAŞI -->
+    <section class="page-hero">
+      <div class="tagline">🏁 Sonuç · Tartışma · Öneriler</div>
+      <h1>Sonuç ve Tartışma</h1>
+      <p class="muted">
+        Bu bölümde 20 günlük ölçümlerin genel yorumu yapılmış ve Sinop özelinde uygulanabilir çözüm önerileri sunulmuştur.
+      </p>
+
+      <div class="quick-links" aria-label="Sayfa içi hızlı bağlantılar">
+        <a class="chiplink" href="#sonuc">📌 Sonuç &amp; Tartışma</a>
+        <a class="chiplink" href="#oneriler">✅ Öneriler</a>
+      </div>
+    </section>
+
+    <!-- SONUÇ -->
+    <section id="sonuc">
+      <h2>Sonuç ve Tartışma</h2>
+
+      <div class="justify-box">
+        <p>
+          Bu çalışma, Sinop kent merkezinde dört farklı arazi kullanım tipinde (şehir merkezi, sahil hattı, okul yerleşkesi, ormanlık alan)
+          gerçekleştirilen çok zamanlı mikro iklim ölçümleri ile kentsel ısı adası oluşumuna katkıda bulunan temel çevresel parametreleri
+          (sıcaklık, nem, basınç, aydınlanma şiddeti (lux), PM₂.₅–PM₁₀) karşılaştırmalı olarak incelemiştir. Elde edilen bulgular, ulusal ve
+          uluslararası literatürde (Tozam, 2016; Yüksel, 2005) ortaya konan tespitlerle yüksek düzeyde uyumludur.
+        </p>
+
+        <p>
+          Ölçümler, sıcaklık açısından en belirgin mikro iklim farkının öğle saatlerinde ortaya çıktığını göstermiş; şehir merkezi günün tüm
+          zaman dilimlerinde en sıcak bölge olurken, ormanlık alan en düşük sıcaklık değerlerine sahip olmuştur. Açık alanın (Nötr) yüzey
+          kaynaklı ısı tutma kapasitesinin özellikle öğleden sonra arttığı belirlenmiş, sahil bölgesinin ise hem aydınlanma şiddetinin hem
+          rüzgâr etkisi nedeniyle gün boyunca dinamik bir sıcaklık profili sergilediği görülmüştür.
+        </p>
+
+        <p>
+          Nem ölçümleri bu bulguları desteklemiş; ormanlık alan gün boyu en yüksek nem düzeylerine sahip olurken, açık alan güneşlenme ve
+          buharlaşma nedeniyle en düşük nem seviyelerini göstermiştir. Aydınlanma verileri, sahilin gün boyunca en yüksek güneşlenmeye sahip
+          olduğunu, ormanlık alanın yoğun gölgeleme nedeniyle sürekli düşük lux değerleri verdiğini kanıtlamıştır.
+        </p>
+
+        <p>
+          Partikül madde analizlerinde ise şehir merkezi hem PM₂.₅ hem PM₁₀ açısından günün en kirli bölgesi olarak öne çıkmış; ormanlık alan
+          en temiz mikro iklimi sunmuştur. Bu sonuçlar, bitki örtüsünün kirleticileri filtreleyerek hava kalitesini iyileştirdiğini vurgulayan
+          araştırmalarla (Tozam, 2016) tamamen paraleldir.
+        </p>
+
+        <p>
+          Arazi kullanımındaki farklılıkların mikro iklim parametreleri üzerinde belirleyici olduğu bu çalışmada ortaya çıkan veriler,
+          kentsel ısı adasının Sinop’ta yerel ölçekte kendisini gösterdiğini ve özellikle yapı yoğunluğunun, yansıtıcı yüzeylerin, asfalt
+          ısınmasının ve düşük yeşil alan oranının sıcaklık ve hava kalitesi üzerinde doğrudan etkili olduğunu göstermektedir.
+          Yüksel (2005) tarafından Ankara için önerilen stratejiler Sinop özelinde de geçerlidir. Buna göre, kentte mikro ölçekte iklim
+          haritalarının çıkarılması, stresli bölgelerin belirlenmesi, rüzgâr koridorlarının korunması, planlama süreçlerinin disiplinlerarası
+          bir yaklaşımla yürütülmesi önemlidir.
+        </p>
+
+        <p>
+          Ayrıca EPA’nın belirlediği temel stratejiler olan yeşil çatılar, soğuk çatılar, bitkilendirme ve soğuk kaplama malzemeleri, bu
+          çalışmanın bulgularıyla doğrudan örtüşen çözüm yollarıdır. Özellikle ölçümler şehir merkezinde ısı birikimi, düşük nem, yüksek lux
+          yansıması ve yüksek partikül konsantrasyonu gibi sorunları açıkça göstermiş olduğundan; çatı yüzeylerinde serin malzemeler
+          kullanılması, yeşil çatı uygulamalarının teşvik edilmesi, bina cephelerinde ısıl yükü azaltan açık renkli kaplamaların tercih
+          edilmesi ve kamusal alanların yoğun şekilde bitkilendirilmesi Sinop için uygulanabilir ve etkili yöntemlerdir (Yüksel, 2005).
+        </p>
+
+        <p>
+          Bununla birlikte bu projenin önemi yalnızca elde edilen çevresel verilerde değil, kullanılan yöntemin özgünlüğünde ve eğitsel
+          katkısında da ortaya çıkmaktadır. Çalışma boyunca lise öğrencileri tarafından tasarlanan ve kullanılan gezici mikro iklim
+          istasyonu, hem ölçümlerin farklı noktalarda karşılaştırılabilir şekilde yapılmasına olanak sağlamış hem de öğrencilerin sensör
+          teknolojileri, veri toplama, kablosuz iletişim, çevresel analiz ve bilimsel raporlama süreçlerine etkin biçimde katılımını
+          desteklemiştir.
+        </p>
+
+        <p>
+          Bu yönüyle proje, öğrencilerin uygulamalı öğrenme deneyimi kazanmasını sağlayarak 21. yüzyıl becerilerini güçlendirmiştir. Aynı
+          zamanda iklim krizi, hava kalitesi, kentsel ısı adası ve sürdürülebilir kentleşme gibi küresel ölçekte kritik konuların yerel
+          düzeyde anlaşılmasına katkı sunmuş; gençlerde çevresel farkındalığı artırmayı ve bilinçli bir ekolojik perspektif oluşturmayı
+          hedeflemiştir.
+        </p>
+
+        <p>
+          Sonuç olarak, bu çalışma hem bilimsel açıdan geçerli mikro iklim verileri üretmiş, hem de gençlerin teknolojiyi kullanarak kendi
+          kentlerinde iklim okuryazarlığı geliştirmelerine öncülük eden yenilikçi bir eğitim modeli ortaya koymuştur. Proje çıktıları GitHub
+          Pages platformu üzerinden ücretsiz olarak yayınlanmış ve kalıcı bir dijital erişim ortamı oluşturulmuştur.
+        </p>
+      </div>
+
+      <div class="callout">
+        <strong>Kısa Özet:</strong>
+        <span class="muted">
+          Şehir merkezi en sıcak ve en kirli; ormanlık alan en serin ve en temiz bölge olarak öne çıkmıştır. Arazi kullanımı, Sinop’ta mikro iklimi belirgin biçimde şekillendirmektedir.
+        </span>
+      </div>
+    </section>
+
+    <!-- ÖNERİLER -->
+    <section id="oneriler">
+      <h2>Öneriler</h2>
+      <p class="muted">
+        Mikro iklim verileri ve literatür birlikte değerlendirildiğinde, Sinop’ta kentsel ısı adası etkisini azaltmak ve hava kalitesini
+        iyileştirmek amacıyla aşağıdaki uygulamalar önerilmektedir:
+      </p>
+
+      <ol class="steps">
+        <li>
+          <strong>Kentsel Mikro İklim Haritalaması Yapılmalı</strong>
+          <p>
+            Gezici istasyonla elde edilen sıcaklık, nem, aydınlanma ve partikül verileri kent genelinde daha geniş bir mikro iklim
+            haritalamasıyla desteklenmeli; sıcak noktalar (hot-spots) belirlenerek öncelikli müdahale alanları tanımlanmalıdır.
+          </p>
+        </li>
+        <li>
+          <strong>Rüzgâr Koridorları Korunmalı ve İyileştirilmelidir</strong>
+          <p>
+            Kıyı bandından kent içine ilerleyen doğal hava akımlarının önünü kesen yapılaşma sınırlandırılmalı; planlamada rüzgâr yönü
+            dikkate alınarak geçirgen koridorlar korunmalıdır. (Yüksel, 2005 ile uyumludur.)
+          </p>
+        </li>
+        <li>
+          <strong>Yeşil Alanlar Artırılmalı, Ağaçlandırma Yaygınlaştırılmalıdır</strong>
+          <p>
+            Ormanlık alanın en düşük sıcaklık ve en temiz hava değerlerine sahip olduğu dikkate alınarak; kent içinde gölgelik veren,
+            partikül tutan ve nem dengesini koruyan yeni yeşil alanlar oluşturulmalı; yol kenarı ağaçlandırması önceliklendirilmelidir.
+          </p>
+        </li>
+        <li>
+          <strong>Yeşil Çatı ve Serin Çatı Uygulamaları Teşvik Edilmelidir</strong>
+          <p>
+            Açık renkli kaplamalar, bitkilendirilmiş yeşil çatı sistemleri ve EPA’nın önerdiği serin çatı uygulamaları enerji tüketimini
+            düşürerek KIA etkisini azaltacaktır. Yerel yönetimlerin destek mekanizmaları geliştirmesi önemlidir.
+          </p>
+        </li>
+        <li>
+          <strong>Kamusal Alanlarda Gölgeleme ve Bitkisel Düzenleme Artırılmalıdır</strong>
+          <p>
+            Okul bahçeleri, resmi kurum çevreleri, açık otoparklar ve yaya alanları gölgelendirilmeli; büyük taçlı ağaçlarla yaz
+            aylarında aşırı ısınma azaltılmalıdır. Bu, öğrenciler için daha sağlıklı bir okul çevresi de sağlar.
+          </p>
+        </li>
+        <li>
+          <strong>Şehir Merkezinde Partikül Madde Kaynakları Azaltılmalıdır</strong>
+          <p>
+            Şehir merkezinin günün tüm saatlerinde en yüksek PM₂.₅ ve PM₁₀ değerlerine sahip olduğu görülmüştür. Trafik yoğunluğunu
+            azaltıcı düzenlemeler, yol ıslatma–temizleme uygulamaları ve düşük emisyonlu ulaşım modelleri teşvik edilmelidir.
+          </p>
+        </li>
+        <li>
+          <strong>Sensör Tabanlı Eğitim Programları Yaygınlaştırılmalıdır</strong>
+          <p>
+            Lise öğrencilerinin gezici istasyonla veri toplaması çevresel farkındalığı artırmıştır. Aynı model farklı okullara uyarlanarak
+            öğrencilerin iklim okuryazarlığı, veri bilimi ve sensör teknolojileri yetkinlikleri geliştirilebilir.
+          </p>
+        </li>
+        <li>
+          <strong>CBS Tabanlı Bir Kent İklimi İzleme Sistemi Kurulmalıdır</strong>
+          <p>
+            Ölçüm verileri uzun vadede CBS tabanlı bir platformda toplanarak Sinop için gerçek zamanlı bir “iklim izle–değerlendir–önle”
+            sistemi oluşturulmalıdır. Bu sistem, planlama kararlarını bilimsel temele oturtacaktır.
+          </p>
+        </li>
+        <li>
+          <strong>Kentsel Kaplama Malzemeleri Yeniden Değerlendirilmelidir</strong>
+          <p>
+            Yansıtıcılığı yüksek, ısı depolaması düşük serin kaplamalar yol/kaldırım/otoparklarda kullanılmalı; ısı birikimine neden olan
+            koyu renkli malzemelerden mümkün olduğunca kaçınılmalıdır.
+          </p>
+        </li>
+        <li>
+          <strong>Toplumsal Farkındalık Çalışmaları Artırılmalıdır</strong>
+          <p>
+            Atölyeler, okul etkinlikleri ve yerel kampanyalarla halkın iklim krizi, mikro iklim ve ısı adası konularındaki bilinç düzeyi
+            güçlendirilmelidir.
+          </p>
+        </li>
+      </ol>
+
+      <div class="callout" style="margin-top: 1.1rem;">
+        <strong>Not:</strong>
+        <span class="muted">
+          Öneriler, proje verileriyle doğrudan ilişkilidir ve Sinop’ta uygulanabilir yerel planlama adımlarına dönüştürülebilir.
+        </span>
+      </div>
+    </section>
+
+    <footer>
+      Gezici Mikro İklim İstasyonu — Sinop · Sonuç &amp; Öneriler Sayfası
+    </footer>
+  </main>
+</body>
+</html>
